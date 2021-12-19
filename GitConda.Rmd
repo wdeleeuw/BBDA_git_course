@@ -141,11 +141,17 @@ If the work of to branches has to be combined into a single branch, it is called
 
 # Cloning 
 
-If 
+Cloning a repository means a copy of the whole repository including the history and branches is made. To experiment with  cloning  you can install git on your local computer (check https://git-scm.com/) and clone the repository you just created to you local computer. If you you prefer you can clone the repository to a different directory on Crunchomics.  The windows and mac versions of git offer both a gui and a bash shell to interact with a repository. In the shell you run the command
 ```
-  git clone <UvAnetID>@omics-h0.science.uva.nl:<path_to_repository>
-```
+  git clone <UvAnetID>@omics-h0.science.uva.nl:<path_to_repository_on_omics>
   
+```
+If you are cloning to a different location on the same computer use 
+```
+   git clone <path_to_repository>  [new_name]
+``
+The **new_name** is only needed if the original and clone have the same  parent directory. 
+
 
 # Parallel development 
 
