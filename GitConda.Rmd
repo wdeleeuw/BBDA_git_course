@@ -164,22 +164,6 @@ http://github.com
 In R the command `install_github()` from the devtools package Can be used to install R packages which are hosted on github. 
 
 
-# Rmd stuff
-
-
-A list 
-
--   __tab__: complete filename. Press twice for options 
--   __up and down arrow keys__: browse command history
--   __ctrl-c__: terminate running program
--   __ctrl-z__: stop running program. fg/bg to resume in foreground or background
--   __ctll-d__: end of file
-
-Plot
-
-```{r echo=FALSE} 
-plot(mtcars$mpg, mtcars$disp)
-```
 
 
 
