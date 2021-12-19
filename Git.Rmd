@@ -1,5 +1,5 @@
 ---
-title: "Git basic practical"
+title: "basics of Git"
 author: "Wim de Leeuw"
 date: "20-12-2021"
 output:
@@ -15,9 +15,10 @@ output:
 
 
 # Getting started
-Git is a distributed version tracking system with broad functionality and many options. A basic hands on introduction using Crunchomics somewhat targeted to bioinformatics projects is given here.   
+Git is a distributed version tracking system with broad functionality and many options. A basic hands on introduction using Crunchomics somewhat targeted to bioinformatics projects is given here. In the first part of the practical which explains the basic usage of git is  more or less cut and paste. The practical, however, should also be considered a invitation to experiment and for example, if you think you might start using git, to set up a personal  environment which you like for example by setting up a github account and/or installing git on your local computer.  
+
  
-Log in to Crunchomics. Git is installed on the system however it has to be configured for a user once using the following commands: 
+To start the practical log in to Crunchomics. Git is installed on the system however it has to be configured for a user once using the following commands: 
 
 ```
 git config --global user.name  "put your name here"
@@ -115,7 +116,7 @@ Now we are in a separate branch with the name **mightwork**  All changes made to
 ```
     echo " Trying some algorithm which might not work" >> README  # add text to readme
     touch  development.R    #  Create a new file
-    git addd README development.R
+    git add README development.R
     git commit -m "First commit in mightwork"
 ``` 
 The is now committed. All the project files in the directory are equal to the committed. The working directory is clean. In this state we can switch between branches. For example if we want to continue working on the master  we can checkout the master.   
@@ -144,30 +145,62 @@ If the work of to branches has to be combined into a single branch, it is called
 Cloning a repository means a copy of the whole repository including the history and branches is made. To experiment with  cloning  you can install git on your local computer (check https://git-scm.com/) and clone the repository you just created to you local computer. If you you prefer you can clone the repository to a different directory on Crunchomics.  The windows and mac versions of git offer both a gui and a bash shell to interact with a repository. In the shell you run the command
 ```
   git clone <UvAnetID>@omics-h0.science.uva.nl:<path_to_repository_on_omics>
-  
 ```
 If you are cloning to a different location on the same computer use 
+
 ```
    git clone <path_to_repository>  [new_name]
-``
-The **new_name** is only needed if the original and clone have the same  parent directory. 
+```
+The `new_name` parameter is only needed if the original and clone have the same parent directory. As the default name is the name of the directory the repository was initialized in.   
 
 
 # Parallel development 
 
-To pick up development which was done on  
+With more than one copy of a repository the content can diverge as each copy is basically independent. Usually the in the clones independent development takes place by one or more persons. Best practice is to start a new branch  in each clone in which development takes place using:
+```
+   git checkout -b [branchname]
+```
+After one or more local commits to the branch the origin repository can be updated using the command 
+```
+   git push 
+```
+This will incorporate the changes in the original repository. If no branch was created pushing will in general not be possible. The reason is that on the original (upstream) repository the master is probably also checked out. It would no longer be possible to commit files as the head would already have moved on by the push of the clone since the last commit. 
+
+After a branch has been pushed from a clone in the original repository the branch can be merged into the master using the merge command
+```
+   git merge [branchname] 
+```
+Now git will try to merge the changes to the repository in the branch with the master. If conflicts arise, i.e. automatic merging  is impossible the files in which conflicts arise will contain text like 
+```
+<<<<<<< HEAD
+Some content added in head
+=======
+totally different content 
+>>>>>>> branchname
+```
+After editing out these conflicts, adding and committing a merged version can be made. 
+
+Another way to keep repositories in sync during development is fetching and merging. Usually in the clone (downstream)  the changes on the master branch since the start of the branch can be incorporated in the current branch using. 
 ```
 git fetch master
 git merge
-``
+```
 
 # Github 
 
-Up to now we we used a local github repository hosted in a directory on Crunchomics. Access is possible only for people with access Crunchomics in general and the directory in particular.  Github is a company (Microsoft) which hosts github repositories. Personal and public repositories are free. Non public multi user repositories are not. By creating an account on github you can store your repositories accessible from any location and make it available world wide. 
+Up to now we we used a local git repository. It is hosted in a directory on Crunchomics. Access is possible only for people with have access to that particular directory on Crunchomics.  Github is a website owned by Microsoft which hosts git repositories. Repositories which are either personal or  public are hosted free of charce.  Non public multi user repositories are available on a subscription basis. 
 
-http://github.com
+After creating an account on [github](https://github.com) you can store your repositories accessible from any location and make it available world wide. Many bioinformatics projects make code available in this way. Using the git commands you can access the repositories. Without an gitub account  you can download the repositories using 
+```
+  git clone git://github.com/SomeUser/SomeRepo.git
+```
+If you have an account and set up [access keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) you can clone a repository using.
+```
+  git clone git@github.com:UserName/OtherRepo.git
+```
+Using this way of cloning you can not only commit local changes but also push commits back to the github repository.   
 
-In R the command `install_github()` from the devtools package Can be used to install R packages which are hosted on github. 
+The properties of universal accessibility and version management are used by researchers as an easy way to make R packages available. While the requirements for inclusion in CRAN or Bioconductor are not trivial anybody can put the package code available on github. The devtools package offers the  `install_github()` function which  be used to install R packages straight from github. 
 
 
 
