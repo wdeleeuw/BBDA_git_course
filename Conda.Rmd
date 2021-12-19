@@ -1,0 +1,80 @@
+---
+title: "Conda installation and getting started on Crunchomics"
+author: "Wim de Leeuw"
+date: "19-12-2021"
+output: 
+  html_document:
+    toc: yes
+    toc_depth: 2
+    toc_float: no
+    number_sections: yes
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+---
+
+## Conda 
+
+On a system like  Crunchomics a basic set of tools is installed however niche-tools with specific applications are not available. Users have no admin rights so the descriptions on internet involving **sudo**  are not and **apt install** or **yum install**   are not possible as they require root access to the system.  Conda is a tool to install software within the confines of a user account.  
+
+Programs generally depend on an environment consisting of  other programs  and libraries which might in turn depend on other programs libraries and so on. As these programs and libraries are developed and change over time programs depend on specific versions of libraries. For installation the software needs to be compiled for the given environment or the parts of the environment which are not available need to be installed as well.    
+
+Here conda comes in. It is able to track dependencies and create environments in user space (so no root access is needed).
+
+## installing Conda 
+
+On your account conda can be installed on a user account (no sudo needed) using
+
+> wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+>
+> bash Miniconda3-latest-Linux-x86_64.sh  # check not below
+>
+> conda update conda
+
+Notes
+
+ 1.   If you plan to use miniconda on Crunchomics in the future it is best to not use the default installation location `$HOME/miniconda3`. The available space in your home directory is limited and some conda packages are large. By using a directory in personal like `/zsf/omics/personal/$USER/miniconda3` chanches are smaller that you will run out of space. 
+
+ 2. **miniconda** and **anaconda** are more or less interchangeable conda based systems. The  main difference is that Anaconda comes loaded with a large amount of packages while miniconda starts more or less empty.  If you prefer and have sufficient free space on your disk there are conda versions available for windows and macOS. If you plan to do more than just experiment 10Gb free space is needed also not all packages are available on all platforms.
+ 
+ 3. conda uses itself to get updates so running ```conda update conda```  update the installed verion of conda to the most recent one. 
+ 
+Using conda, environments are created in which all the dependencies are stored. Conda keeps track what packages of the right version are already on the system and which packages of which version have to be downloaded and installed such that they can be used without interfering with other installed versions.
+
+## Conda repository
+
+On <https://anaconda.org/> a large public anaconda package repository. It is a good place to start a search for a specific package. Searching for **bowtie2**, **spades** or **kallisto** will point you to available conda packages. It also shows the platforms packages are available for.
+
+## Conda example
+Qimme2 <https://qiime2.org> is a microbiome analysis package which depends on a large collection of other software and for some of them requires specific versions. The package manager for Ubuntu does not know it so and installing the required versions of al the dependencies will probably break other tools which require other versions. So conda is a good option.
+
+> wget https://data.qiime2.org/distro/core/qiime2-2021.11-py38-linux-conda.yml
+
+
+An environment is defined in a file in YAML format. Based on this specification conda can create a new environment named qiime2. The following command will create the environment, download all the dependencies and install them in the new environment. Note for those running a conda environment on their laptop that the total amount of space needed is about 6Gb which has to be downloaded and stored.
+
+> conda env create -n qiime2 --file qiime2-2021.11-py38-linux-conda.yml
+
+Conda will create a new environment with the name qiime2  in which all the dependencies listed in the yaml file and are not available in the base environment. As there are many dependencies to download and install this might several minutes. The syntax of the conda commands and options can be found at <https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/index.html>
+If the creation is successful the environment can be activated using
+
+> conda activate qiime2
+
+The environment contains all tools which qiime2 needs in the version is needs. For example the 2011.11 version of qiime2 is using R-4.0.5. So if you run ```R --version``` you'll notice that it is different from the system installed version furthermore if you start R and check which packages are installed (installed.packages()) you will find a different set compared to the system wide version. Installing packages would also result in the installation of packages within the qiime environment. Note that not only R but that for numerous programs other versions are installed in the qiime2 environment.  
+
+The environment can be deactivated using
+
+> conda deactivate
+
+Now you are back in the base environment with the standard system set of tools. If you 
+do not plan to use qiime2 it might be a good idea to remove the environment. 
+
+> conda remove --name qiime2 --all
+
+And clean the environment 
+> conda clean --all
+
+The size of a clean base environment is small at 0.4GB  but if you want to get rid of miniconda altogether just delete the miniconda3 directory, and remove the part between 'conda_initialize` comments in the `.bashrc` file. 
+
+
+
