@@ -22,7 +22,8 @@ To start the practical log in to Crunchomics. Git is installed on the system how
 
 ```
 git config --global user.name  "put your name here"
-git congit --global user.email "put your email here"
+git config --global user.email "put your email here"
+git config --global core.editor nano 
 ```
 This has to be done only once on each system you use git. The information is stored in the file **.gitconfig** in your home directory.  Other configuration information can be stored there as well.
 
