@@ -13,7 +13,6 @@ output:
     toc_depth: '2'
 ---
 
-
 # Getting started
 Git is a distributed version tracking system with broad functionality and many options. A basic hands on introduction using Crunchomics somewhat targeted to bioinformatics projects is given here. In the first part of the practical which explains the basic usage of git is  more or less cut and paste. The practical, however, should also be considered a invitation to experiment and for example, if you think you might start using git, to set up a personal  environment which you like for example by setting up a github account and/or installing git on your local computer.  
 
@@ -139,8 +138,6 @@ If the work of to branches has to be combined into a single branch, it is called
    git merge mightwork
 ```
 
-
-
 # Cloning 
 
 Cloning a repository means a copy of the whole repository including the history and branches is made. To experiment with  cloning  you can install git on your local computer (check https://git-scm.com/) and clone the repository you just created to you local computer. If you you prefer you can clone the repository to a different directory on Crunchomics.  The windows and mac versions of git offer both a gui and a bash shell to interact with a repository. In the shell you run the command
@@ -182,6 +179,7 @@ totally different content
 After editing out these conflicts, adding and committing a merged version can be made. 
 
 Another way to keep repositories in sync during development is fetching and merging. Usually in the clone (downstream)  the changes on the master branch since the start of the branch can be incorporated in the current branch using. 
+
 ```
 git fetch master
 git merge
